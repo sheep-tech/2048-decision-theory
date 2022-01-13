@@ -1,3 +1,4 @@
+# IMPORTANT: this file is no longer updated and used anymore!
 import numpy as np
 from tabulate import tabulate  # for rendering board
 from enum import Enum
@@ -304,41 +305,3 @@ class GameEnvironment:
                 return 0.0
 
         return 0.0
-
-    # returns the Transition Probability P(s'| s, a)
-    # def get_transition_prob(self, action, new_state, old_state=None):
-    # if old_state is None:
-    #     old_state = self.__state
-    # # returns the Transition Probability P(s'| s, a)
-    # # with s = old_state, a = action and s' = new_state
-
-    # # if the game is over, no transition can take place
-    # if self.is_done(old_state):
-    #     return 0.0
-
-    # # the position of the action must be empty
-    # if old_state[action] != E:
-    #     return 0.0
-
-    # # state after placing X
-    # state_after_X = copy(old_state)  # avoid unwanted changed by reference
-    # state_after_X[action] = X
-
-    # # check if game is done
-    # if self.is_done(state_after_X) and state_after_X == new_state:
-    #     return 1.0
-
-    # # game is not done: calculate all possible states of the opponent
-    # possible_new_states = []
-    # possible_opponent_actions = self.get_possible_actions(state_after_X)
-    # for action in possible_opponent_actions:
-    #     possible_new_state = copy(state_after_X)
-    #     possible_new_state[action] = O
-    #     possible_new_states.append(possible_new_state)
-    # if new_state not in possible_new_states:
-    #     return 0.0
-
-    # # transition is possible, apply strategy:
-    # # random opponent, probability is 1 / (# of E before placing the new O)
-    # prob = 1 / (len(possible_new_states))
-    # return prob
