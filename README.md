@@ -11,6 +11,8 @@
 * Rewards: the created number out after slide
 
 
-* Start with 3x3
-* How to implement random generating function
-* How to implement the utility 
+* Start with 3x3 and target 64
+### Remaining:
+* get_all_possible_actions 
+* get_all_possible_states
+* _calculate_transition_prob
