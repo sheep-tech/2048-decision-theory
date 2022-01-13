@@ -225,6 +225,7 @@ class GameEnvironment:
         for i in range(self.board_size):
             for j in range(self.board_size):
                 if self.__state[i][j] == self.target:
+                    self.__won = True
                     return True
 
         # check if all cells are occupied and no more merging is possible
@@ -252,14 +253,62 @@ class GameEnvironment:
 
     # Reward R(s) for every possible state
     def get_reward(self, state):
+        step_reward = -0.01
+
         # detect tile with target value (e.g. 2048 tile)
         for i in range(self.board_size):
             for j in range(self.board_size):
                 if state[i][j] == self.target:
                     return 1
+
+        # check if all cells are occupied and no more merging is possible
+        if 0 not in state:
+            # no more merging is possible
+            for i in range(self.board_size - 1):
+                for j in range(self.board_size - 1):
+                    if (state[i][j] == state[i + 1][j]) or (
+                        state[i][j] == state[i][j + 1]
+                    ):
+                        return step_reward
+            # check bottom row
+            for j in range(self.board_size - 1):
+                if state[self.board_size - 1][j] == state[self.board_size - 1][j + 1]:
+                    return step_reward
+
+            # check rightmost column
+            for i in range(self.board_size - 1):
+                if state[i][self.board_size - 1] == state[i + 1][self.board_size - 1]:
+                    return step_reward
+
+            return step_reward
+
+        # game is done
         return -1
 
     # returns the Transition Probability P(s'| s, a)
+    # with s = old_state, a = action and s' = new_state
+    # def get_transition_prob(self, action, new_state, old_state=None):
+    #     if old_state is None:
+    #         old_state = self.__state
+
+    #     # if the game is over, no transition can take place
+    #     if self.is_done(old_state):
+    #         return 0.0
+
+    #     # perform action
+    #     state_after_action = copy(old_state)  # avoid unwanted changed by reference
+    #     state_after_action = self.__calculate_possible_states(action)
+
+    #     # check if game is done
+    #     if self.is_done(state_after_action) and state_after_action == new_state:
+    #         if self.__won:
+    #             return 1.0
+    #         else:
+    #             return 0.0
+
+    #     return 0.0
+
+    # # returns the Transition Probability P(s'| s, a)
     # def get_transition_prob(self, action, new_state, old_state=None):
     # if old_state is None:
     #     old_state = self.__state
